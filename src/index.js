@@ -1,11 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 require('dotenv').config();
 
+const { setupWebSocket } = require('./websocket');
 const routes = require('./routes');
 
 const app = express();
+
+const server = http.Server(app);
+setupWebSocket(server);
 
 mongoose.connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster-auipm.mongodb.net/test?retryWrites=true&w=majority`,
@@ -16,4 +21,4 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-app.listen(process.env.PORT || 3333);
+server.listen(process.env.PORT || 3333);

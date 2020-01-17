@@ -21,7 +21,8 @@ module.exports = {
         },
       },
     });
-
+    
+    console.log('Sending response:', devs);
     return res.json(devs);
   },
 };
